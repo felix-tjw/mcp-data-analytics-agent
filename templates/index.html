@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf }}">
+
+    <title> Magic · Data Analytics Agent</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}?v=20261113"
+    >
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <aside>
+        <a class="brand" href="/">
+            ◈
+            <span>Magic<span class="brand-dot">.</span></span>
+        </a>
+
+        <p class="eyebrow">DATA WORKSPACE</p>
+
+        <div class="nav active">
+            ▦ &nbsp; Explore &amp; analyse
+        </div>
+
+        <div class="aside-bottom">
+            <span class="tiny-label">POWERED BY MCP</span>
+
+            <p>
+                One workspace.<br>
+                Three ways to find answers.
+            </p>
+
+            <div class="legend">● &nbsp; Pandas · exact calculations</div>
+            <div class="legend">● &nbsp; RAG · dataset context</div>
+            <div class="legend">● &nbsp; Web · external research</div>
+        </div>
+    </aside>
+
+    <main>
+        <!-- Top navigation -->
+        <header>
+            <div class="breadcrumb">
+                Workspace <span>/</span> Data explorer
+            </div>
+
+            <button id="refresh-status" class="quiet" type="button">
+                ↻ Check connection
+            </button>
+        </header>
+
+        <!-- Page heading -->
+        <section class="heading">
+            <div>
+                <p class="eyebrow">FROM DATA TO UNDERSTANDING</p>
+
+                <h1>Your data. Clear answers.</h1>
+
+                <p class="subtitle">
+                    Explore a dataset, ask a question, and see the evidence
+                    behind every answer.
+                </p>
+            </div>
+
+            <span id="connection" class="badge">
+                Checking services…
+            </span>
+        </section>
+
+        <div id="notice" class="notice hidden" role="alert"></div>
+
+        <div class="workspace">
+            <!-- Dataset panel -->
+            <section class="panel dataset-panel">
+                <div class="panel-top">
+                    <h2>01 <span>Your dataset</span></h2>
+                    <span class="pill">CSV / EXCEL</span>
+                </div>
+
+                <label class="drop-zone" id="drop-zone" for="file">
+                    <span class="upload-icon" aria-hidden="true">
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="22"
+                            height="22"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M12 19V5m-6 6 6-6 6 6"/>
+                        </svg>
+                    </span>
+
+                    <strong>Bring your data into focus</strong>
+
+                    <span>
+                        Drop a file here or <u>browse files</u>
+                    </span>
+
+                    <small>
+                        CSV, XLS, XLSX · up to {{ max_mb }} MB
+                    </small>
+
+                    <input
+                        id="file"
+                        type="file"
+                        accept=".csv,.xls,.xlsx"
+                    >
+                </label>
+
+                <!-- Import settings -->
+                <div id="import-options" class="hidden">
+                    <div class="import-title" id="import-name"></div>
+
+                    <div class="form-row">
+                        <div>
+                            <label for="sheet">Worksheet</label>
+                            <select id="sheet"></select>
+                        </div>
+
+                        <div>
+                            <label for="header">Header row</label>
+                            <input
+                                id="header"
+                                type="number"
+                                min="1"
+                                max="500"
+                                value="1"
+                            >
+                        </div>
+                    </div>
+
+                    <details>
+                        <summary>Project scope &amp; merged cells</summary>
+
+                        <label for="ffill">
+                            Forward-fill columns
+                        </label>
+                        <input
+                            id="ffill"
+                            placeholder="Project, Module"
+                        >
+
+                        <label for="scope-column">Scope column</label>
+                        <input
+                            id="scope-column"
+                            placeholder="Project"
+                        >
+
+                        <label for="scope-value">Exact scope value</label>
+                        <input
+                            id="scope-value"
+                            placeholder="SilverBank Non-Banking Extension"
+                        >
+
+                        <p class="muted">
+                            Separate forward-fill columns with commas.
+                            Only specified columns are filled.
+                            Missing completion stays unknown.
+                        </p>
+                    </details>
+
+                    <p class="muted">
+                        Preview uses raw worksheet rows. Choose the row
+                        containing column headings.
+                    </p>
+
+                    <div
+                        id="raw-preview"
+                        class="table-scroll small-table"
+                    ></div>
+
+                    <button
+                        class="primary full"
+                        id="activate"
+                        type="button"
+                    >
+                        Activate dataset →
+                    </button>
+                </div>
+
+                <div id="dataset-empty" class="empty-state">
+                    Your dataset overview will appear here.
+                </div>
+
+                <!-- Active dataset -->
+                <div id="dataset-info" class="hidden">
+                    <div class="dataset-title">
+                        <span aria-hidden="true">▤</span>
+                        <strong id="dataset-name"></strong>
+                    </div>
+
+                    <div class="stats">
+                        <div>
+                            <strong id="row-count">—</strong>
+                            <span>rows in scope</span>
+                        </div>
+
+                        <div>
+                            <strong id="column-count">—</strong>
+                            <span>columns</span>
+                        </div>
+
+                        <div>
+                            <strong id="missing-count">—</strong>
+                            <span>missing cells</span>
+                        </div>
+                    </div>
+
+                    <div class="section-label">
+                        SCHEMA
+                        <span>type · missing</span>
+                    </div>
+
+                    <div id="schema"></div>
+
+                    <details>
+                        <summary>View first 20 records</summary>
+                        <div id="data-preview" class="table-scroll"></div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- Chat panel -->
+            <section class="panel chat-panel">
+                <div class="panel-top">
+                    <h2>02 <span>Ask your data</span></h2>
+                    <span class="pill accent">AI ANALYST</span>
+                </div>
+
+                <div class="service-strip" id="services">
+                    Pandas + retrieval + web research
+                </div>
+
+                <div id="messages" aria-live="polite">
+                    <div id="welcome">
+                        <div class="spark" aria-hidden="true">✦</div>
+
+                        <h3>What would you like to discover?</h3>
+
+                        <p>
+                            Ask a question. Get a clear answer with the
+                            supporting calculations and sources.
+                        </p>
+
+                        <div class="suggestions">
+                            <button
+                                type="button"
+                                data-question="Summarise this dataset and identify missing values."
+                            >
+                                <span
+                                    class="suggestion-icon"
+                                    aria-hidden="true"
+                                >▦</span>
+
+                                <span class="suggestion-label">
+                                    Summarise my dataset
+                                </span>
+
+                                <span
+                                    class="suggestion-arrow"
+                                    aria-hidden="true"
+                                >↗</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                data-question="Which groups have the most records? Ask me which grouping column to use if unclear."
+                            >
+                                <span
+                                    class="suggestion-icon"
+                                    aria-hidden="true"
+                                >≋</span>
+
+                                <span class="suggestion-label">
+                                    Find patterns across groups
+                                </span>
+
+                                <span
+                                    class="suggestion-arrow"
+                                    aria-hidden="true"
+                                >↗</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                data-question="Find relevant records describing Debt Management, and calculate the exact number of matching tasks. Verify the project scope first."
+                            >
+                                <span
+                                    class="suggestion-icon"
+                                    aria-hidden="true"
+                                >✦</span>
+
+                                <span class="suggestion-label">
+                                    Combine context &amp; calculations
+                                </span>
+
+                                <span
+                                    class="suggestion-arrow"
+                                    aria-hidden="true"
+                                >↗</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat composer -->
+                <form id="chat-form">
+                    <label for="question" class="sr-only">
+                        Ask a question
+                    </label>
+
+                    <div class="composer">
+                        <textarea
+                            id="question"
+                            rows="2"
+                            maxlength="8000"
+                            placeholder="Ask a question about your dataset…"
+                        ></textarea>
+
+                        <button
+                            class="primary"
+                            id="send"
+                            type="submit"
+                            aria-label="Send question"
+                            title="Send question (Enter)"
+                        >
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="19"
+                                height="19"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path d="M12 19V5m-6 6 6-6 6 6"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <p class="caption" id="chat-caption">
+                        Upload and activate a dataset to get started.
+                    </p>
+                </form>
+            </section>
+        </div>
+
+        <!-- Redesigned direct-tool section -->
+        <section class="panel tool-panel" aria-labelledby="tool-heading">
+            <div class="panel-top">
+                <h2 id="tool-heading">
+                    03 <span>Tool playground</span>
+                </h2>
+
+                <span class="pill accent">NO LLM KEY NEEDED</span>
+            </div>
+
+            <p class="muted">
+                Explore your data directly. Choose a tool, review its
+                arguments, and run it against your active dataset.
+            </p>
+
+            <!--
+                Separate block wrappers keep labels above controls.
+                The existing form-row class provides responsive columns.
+            -->
+            <div class="tool-form">
+                <div>
+                    <label for="tool-select">
+                        <strong>1. Choose a tool</strong>
+                    </label>
+
+                    <select
+                        id="tool-select"
+                        aria-describedby="tool-selection-help"
+                    >
+                        <optgroup label="Pandas · Data analysis">
+                            <option value="pandas_get_dataset_info">
+                                Dataset information
+                            </option>
+
+                            <option value="pandas_get_column_summary">
+                                Column summary
+                            </option>
+
+                            <option value="pandas_aggregate_data">
+                                Aggregate values
+                            </option>
+
+                            <option value="pandas_groupby_data">
+                                Group by column
+                            </option>
+
+                            <option value="pandas_filter_dataset">
+                                Filter records
+                            </option>
+
+                            <option value="pandas_compare_dates">
+                                Compare planned / actual dates
+                            </option>
+                        </optgroup>
+
+                        <optgroup label="RAG · Context retrieval">
+                            <option value="rag_rag_load_dataset">
+                                Index dataset for retrieval
+                            </option>
+
+                            <option value="rag_rag_search_dataset">
+                                Search dataset
+                            </option>
+
+                            <option value="rag_rag_get_dataset_info">
+                                Retrieval index status
+                            </option>
+                        </optgroup>
+                    </select>
+
+                    <p class="muted" id="tool-selection-help">
+                        Selecting a tool loads example arguments.
+                    </p>
+                </div>
+
+                <div class="arguments">
+                    <label for="tool-args">
+                        <strong>2. Review arguments</strong>
+                        <span class="pill">JSON</span>
+                    </label>
+
+                    <textarea
+                        id="tool-args"
+                        rows="5"
+                        spellcheck="false"
+                        autocapitalize="off"
+                        autocomplete="off"
+                        aria-describedby="tool-arguments-help"
+                    >{}</textarea>
+
+                    <p class="muted" id="tool-arguments-help">
+                        Edit the example to match your column names.
+                        Leave <code>{}</code> for dataset information.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Separate action row -->
+            <div class="panel-top">
+                <div>
+                    <span class="pill">ACTIVE DATASET</span>
+
+                    <p class="muted">
+                        Your activated dataset is attached automatically.
+                        No dataset ID is needed.
+                    </p>
+                </div>
+
+                <button
+                    id="run-tool"
+                    class="primary"
+                    type="button"
+                >
+                    Run tool
+                    <span aria-hidden="true">→</span>
+                </button>
+            </div>
+
+            <!-- Existing JavaScript renders tables and JSON here -->
+            <div
+                id="tool-output"
+                role="region"
+                aria-label="Tool execution result"
+                aria-live="polite"
+            ></div>
+        </section>
+
+        <footer>
+            MCP Data Analytics Agent / MCP DATA ANALYTICS
+
+            <span>
+                Calculated facts. Retrieved context. Visible evidence.
+            </span>
+        </footer>
+    </main>
+
+    <script
+        src="{{ url_for('static', filename='js/script.js') }}"
+        defer
+    ></script>
+</body>
+</html>

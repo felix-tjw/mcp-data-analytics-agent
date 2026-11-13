@@ -1,0 +1,39 @@
+# Python environments
+.venv/
+venv/
+env/
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Credentials: keep only the safe example
+.env
+.env.*
+!.env.example
+
+# Uploaded datasets and generated indexes
+uploads/*
+!uploads/.gitkeep
+vector_store/
+
+# Runtime logs
+logs/*
+!logs/.gitkeep
+*.log
+
+# IDE and operating system
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Local archives and backups
+*.zip
+*.bak
+
+# test folders
+tests/*

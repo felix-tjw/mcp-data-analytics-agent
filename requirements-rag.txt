@@ -1,0 +1,4 @@
+# Optional semantic backend. Resolve these in your platform's venv; not part of the core test lock.
+-r requirements.txt
+sentence-transformers>=3,<6
+faiss-cpu>=1.9,<2

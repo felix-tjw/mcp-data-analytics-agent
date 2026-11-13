@@ -1,0 +1,364 @@
+{
+  "titanic": {
+    "source": "data/titanic.csv",
+    "sha256": "81787d320d7f7b03df935e91de8bd19e11d45c5bbcab86ef4d4a76dc91b7d4f2",
+    "row_count": {
+      "function": "count",
+      "column": null,
+      "value": 891,
+      "matched_rows": 891,
+      "missing": null
+    },
+    "survivors": {
+      "function": "sum",
+      "column": "survived",
+      "value": 342,
+      "matched_rows": 891,
+      "missing": 0
+    },
+    "average_fare_by_class": {
+      "rows": [
+        {
+          "pclass": 1,
+          "fare_mean": 84.1546875
+        },
+        {
+          "pclass": 2,
+          "fare_mean": 20.6621831522
+        },
+        {
+          "pclass": 3,
+          "fare_mean": 13.6755501018
+        }
+      ],
+      "total_groups": 3,
+      "matched_rows": 891,
+      "truncated": false,
+      "missing_policy": "Null groups retained; numeric aggregates exclude nulls; all-null sums return null."
+    },
+    "survival_rate_by_sex": {
+      "rows": [
+        {
+          "sex": "female",
+          "survived_mean": 0.7420382166
+        },
+        {
+          "sex": "male",
+          "survived_mean": 0.1889081456
+        }
+      ],
+      "total_groups": 2,
+      "matched_rows": 891,
+      "truncated": false,
+      "missing_policy": "Null groups retained; numeric aggregates exclude nulls; all-null sums return null."
+    },
+    "survivors_over_50": {
+      "rows": [
+        {
+          "survived": 1,
+          "pclass": 1,
+          "sex": "female",
+          "age": 58.0,
+          "sibsp": 0,
+          "parch": 0,
+          "fare": 26.55,
+          "embarked": "S",
+          "class": "First",
+          "who": "woman",
+          "adult_male": false,
+          "deck": "C",
+          "embark_town": "Southampton",
+          "alive": "yes",
+          "alone": true
+        },
+        {
+          "survived": 1,
+          "pclass": 2,
+          "sex": "female",
+          "age": 55.0,
+          "sibsp": 0,
+          "parch": 0,
+          "fare": 16.0,
+          "embarked": "S",
+          "class": "Second",
+          "who": "woman",
+          "adult_male": false,
+          "deck": null,
+          "embark_town": "Southampton",
+          "alive": "yes",
+          "alone": true
+        },
+        {
+          "survived": 1,
+          "pclass": 1,
+          "sex": "female",
+          "age": 58.0,
+          "sibsp": 0,
+          "parch": 0,
+          "fare": 146.5208,
+          "embarked": "C",
+          "class": "First",
+          "who": "woman",
+          "adult_male": false,
+          "deck": "B",
+          "embark_town": "Cherbourg",
+          "alive": "yes",
+          "alone": true
+        },
+        {
+          "survived": 1,
+          "pclass": 1,
+          "sex": "female",
+          "age": 58.0,
+          "sibsp": 0,
+          "parch": 1,
+          "fare": 153.4625,
+          "embarked": "S",
+          "class": "First",
+          "who": "woman",
+          "adult_male": false,
+          "deck": "C",
+          "embark_town": "Southampton",
+          "alive": "yes",
+          "alone": false
+        },
+        {
+          "survived": 1,
+          "pclass": 1,
+          "sex": "female",
+          "age": 63.0,
+          "sibsp": 1,
+          "parch": 0,
+          "fare": 77.9583,
+          "embarked": "S",
+          "class": "First",
+          "who": "woman",
+          "adult_male": false,
+          "deck": "D",
+          "embark_town": "Southampton",
+          "alive": "yes",
+          "alone": false
+        }
+      ],
+      "matched_rows": 22,
+      "offset": 0,
+      "truncated": true
+    }
+  },
+  "synthetic_silverbank": {
+    "source": "data/ProjectPlan_SAMPLE.xlsx",
+    "synthetic": true,
+    "scope": {
+      "sheet": "DevPlan",
+      "header_row": 3,
+      "scope_column": "Project",
+      "scope_value": "SilverBank Non-Banking Extension"
+    },
+    "row_count": {
+      "function": "count",
+      "column": null,
+      "value": 5,
+      "matched_rows": 5,
+      "missing": null
+    },
+    "mandays": {
+      "function": "sum",
+      "column": "Target Manday",
+      "value": 15,
+      "matched_rows": 5,
+      "missing": 0
+    },
+    "status": {
+      "rows": [
+        {
+          "Status": "Completed",
+          "Task_size": 1
+        },
+        {
+          "Status": "In progress",
+          "Task_size": 2
+        },
+        {
+          "Status": "Pending",
+          "Task_size": 2
+        }
+      ],
+      "total_groups": 3,
+      "matched_rows": 5,
+      "truncated": false,
+      "missing_policy": "Null groups retained; numeric aggregates exclude nulls; all-null sums return null."
+    },
+    "completion_by_module": {
+      "rows": [
+        {
+          "Module": "API Service Program",
+          "Completion %_mean": 0.5
+        },
+        {
+          "Module": "Debt Management",
+          "Completion %_mean": 0.5
+        },
+        {
+          "Module": "General Administration",
+          "Completion %_mean": 0.25
+        }
+      ],
+      "total_groups": 3,
+      "matched_rows": 5,
+      "truncated": false,
+      "missing_policy": "Null groups retained; numeric aggregates exclude nulls; all-null sums return null."
+    },
+    "unassigned": {
+      "rows": [
+        {
+          "Project": "SilverBank Non-Banking Extension",
+          "Type": "Task",
+          "Module": "Debt Management",
+          "Task": "Validate overdue calculation",
+          "Status": "Pending",
+          "Assigned To": null,
+          "Target Manday": 3,
+          "Completion %": null,
+          "Overdue": true,
+          "Financial / Non-Financial Mapping": "Financial",
+          "Planned Start": "2026-10-03",
+          "Planned End": "2026-10-10",
+          "Actual Start": null,
+          "Actual End": null,
+          "Remarks": "Calculate arrears from outstanding debt"
+        }
+      ],
+      "matched_rows": 1,
+      "offset": 0,
+      "truncated": false
+    },
+    "schedule": {
+      "rows": [
+        {
+          "Project": "SilverBank Non-Banking Extension",
+          "Type": "Task",
+          "Module": "API Service Program",
+          "Task": "Create account API",
+          "Status": "Completed",
+          "Assigned To": "Developer B",
+          "Target Manday": 4,
+          "Completion %": 1.0,
+          "Overdue": false,
+          "Financial / Non-Financial Mapping": "Financial",
+          "Planned Start": "2026-10-01",
+          "Planned End": "2026-10-07",
+          "Actual Start": "2026-10-01",
+          "Actual End": "2026-10-06",
+          "Remarks": "REST account registration",
+          "_record": 3,
+          "_delay_days": -1.0
+        },
+        {
+          "Project": "SilverBank Non-Banking Extension",
+          "Type": "Task",
+          "Module": "Debt Management",
+          "Task": "Implement repayment schedule",
+          "Status": "In progress",
+          "Assigned To": "Developer A",
+          "Target Manday": 5,
+          "Completion %": 0.5,
+          "Overdue": true,
+          "Financial / Non-Financial Mapping": "Financial",
+          "Planned Start": "2026-10-01",
+          "Planned End": "2026-10-08",
+          "Actual Start": "2026-10-02",
+          "Actual End": null,
+          "Remarks": "Debt schedule and installment processing",
+          "_record": 1,
+          "_delay_days": null
+        },
+        {
+          "Project": "SilverBank Non-Banking Extension",
+          "Type": "Task",
+          "Module": "Debt Management",
+          "Task": "Validate overdue calculation",
+          "Status": "Pending",
+          "Assigned To": null,
+          "Target Manday": 3,
+          "Completion %": null,
+          "Overdue": true,
+          "Financial / Non-Financial Mapping": "Financial",
+          "Planned Start": "2026-10-03",
+          "Planned End": "2026-10-10",
+          "Actual Start": null,
+          "Actual End": null,
+          "Remarks": "Calculate arrears from outstanding debt",
+          "_record": 2,
+          "_delay_days": null
+        },
+        {
+          "Project": "SilverBank Non-Banking Extension",
+          "Type": "Task",
+          "Module": "General Administration",
+          "Task": "Build audit viewer",
+          "Status": "In progress",
+          "Assigned To": "Developer A",
+          "Target Manday": 2,
+          "Completion %": 0.25,
+          "Overdue": false,
+          "Financial / Non-Financial Mapping": "Non-Financial",
+          "Planned Start": "2026-10-05",
+          "Planned End": "2026-10-15",
+          "Actual Start": "2026-10-06",
+          "Actual End": null,
+          "Remarks": "Operational audit UI",
+          "_record": 4,
+          "_delay_days": null
+        },
+        {
+          "Project": "SilverBank Non-Banking Extension",
+          "Type": "Task",
+          "Module": "API Service Program",
+          "Task": "Document endpoints",
+          "Status": "Pending",
+          "Assigned To": "Developer C",
+          "Target Manday": 1,
+          "Completion %": 0.0,
+          "Overdue": false,
+          "Financial / Non-Financial Mapping": "Non-Financial",
+          "Planned Start": "2026-10-09",
+          "Planned End": "2026-10-16",
+          "Actual Start": null,
+          "Actual End": null,
+          "Remarks": "OpenAPI documentation",
+          "_record": 5,
+          "_delay_days": null
+        }
+      ],
+      "matched_rows": 5,
+      "valid_pairs": 1,
+      "unknown_pairs": 4,
+      "late_rows": 0,
+      "mean_delay_days": -1.0,
+      "truncated": false,
+      "definition": "actual minus planned; positive = late"
+    },
+    "retrieval": {
+      "matches": [
+        {
+          "text": "Project: SilverBank Non-Banking Extension; Type: Task; Module: Debt Management; Task: Validate overdue calculation; Status: Pending; Target Manday: 3; Overdue: True; Financial / Non-Financial Mapping: Financial; Planned Start: 2026-10-03; Planned End: 2026-10-10; Remarks: Calculate arrears from outstanding debt",
+          "record": 2,
+          "source": "ProjectPlan_SAMPLE.xlsx",
+          "sheet": "DevPlan",
+          "chunk_offset": 0,
+          "score": 0.2633741507
+        },
+        {
+          "text": "Project: SilverBank Non-Banking Extension; Type: Task; Module: Debt Management; Task: Implement repayment schedule; Status: In progress; Assigned To: Developer A; Target Manday: 5; Completion %: 0.5; Overdue: True; Financial / Non-Financial Mapping: Financial; Planned Start: 2026-10-01; Planned End: 2026-10-08; Actual Start: 2026-10-02; Remarks: Debt schedule and installment processing",
+          "record": 1,
+          "source": "ProjectPlan_SAMPLE.xlsx",
+          "sheet": "DevPlan",
+          "chunk_offset": 0,
+          "score": 0.237552229
+        }
+      ],
+      "backend": "tfidf",
+      "note": "Retrieved chunks are contextual evidence, not a complete result set for counting."
+    }
+  }
+}

@@ -1,0 +1,9 @@
+survived,pclass,sex,age,sibsp,parch,fare,embarked,class,who,alone
+0,3,male,22,1,0,7.25,S,Third,man,false
+1,1,female,38,1,0,71.2833,C,First,woman,false
+1,3,female,26,0,0,7.925,S,Third,woman,true
+1,1,female,35,1,0,53.1,S,First,woman,false
+0,3,male,35,0,0,8.05,S,Third,man,true
+0,3,male,,0,0,8.4583,Q,Third,man,true
+1,2,female,54,0,0,25,S,Second,woman,true
+0,2,male,60,0,0,20,S,Second,man,true
